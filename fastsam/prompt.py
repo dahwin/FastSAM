@@ -453,4 +453,10 @@ class FastSAMPrompt:
         if self.results == None:
             return []
         return self.results[0].masks.data
+    def get_bboxes(self):
+        if self.results is None:
+            return []
+        annotations = self._format_results(self.results[0], 0)
+        bboxes = [self._get_bbox_from_mask(annotation['segmentation']) for annotation in annotations]
+        return bboxes
         
